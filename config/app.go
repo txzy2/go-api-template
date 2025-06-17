@@ -5,8 +5,8 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
-	"github.com/txzy2/simple-api/internal/logger"
 	"github.com/txzy2/simple-api/pkg/common"
+	"github.com/txzy2/simple-api/pkg/logger"
 )
 
 type Config struct {

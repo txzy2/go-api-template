@@ -5,8 +5,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/txzy2/simple-api/internal/controllers/status"
-	"github.com/txzy2/simple-api/internal/logger"
 	"github.com/txzy2/simple-api/pkg/common"
+	"github.com/txzy2/simple-api/pkg/logger"
 )
 
 type (
