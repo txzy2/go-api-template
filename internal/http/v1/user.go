@@ -31,9 +31,5 @@ func (u *UserController) GetUserById(ctx *gin.Context) {
 		return
 	}
 
-	u.SuccessResponse(ctx, "Пользователь успешно получен", map[string]any{
-		"id":   userOutput.Id,
-		"name": userOutput.Name,
-		"age":  userOutput.Age,
-	})
+	u.SuccessResponse(ctx, "Пользователь успешно получен", userOutput)
 }

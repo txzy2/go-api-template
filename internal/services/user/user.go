@@ -15,9 +15,10 @@ func NewUserService() *UserService {
 func (s *UserService) GetUserByID(input UserInput) (UserOutput, error) {
 	if input.Id == "2" {
 		return UserOutput{
-			Id:   input.Id,
-			Name: "Anton",
-			Age:  24,
+			Id:    input.Id,
+			Name:  "Anton",
+			Age:   24,
+			Email: "kamaeff2@gmail.com",
 		}, nil
 	}
 	return UserOutput{}, fmt.Errorf("пользователь с ID %s не найден", input.Id)

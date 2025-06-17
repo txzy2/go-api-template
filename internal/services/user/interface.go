@@ -1,17 +1,18 @@
 package user
 
 type UserInput struct {
-	Id string
+	Id string `json:"id"`
 }
 
 type UserOutput struct {
-	Id   string
-	Name string
-	Age  int
+	Id    string `json:"id"`
+	Name  string `json:"name"`
+	Age   int    `json:"age"`
+	Email string `json:"email"`
 }
 
 // IUserService определяет контракт для сервиса пользователя
 type IUserService interface {
 	GetUserByID(UserInput) (UserOutput, error)
-	CreateUser(name string) (int, error)
+	// CreateUser(UserInput) (UserOutput, error)
 }

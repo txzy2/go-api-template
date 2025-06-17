@@ -11,9 +11,9 @@ import (
 
 type (
 	Success struct {
-		Message string         `json:"message"`
-		Data    map[string]any `json:"data,omitempty"`
-		Mode    string         `json:"mode"`
+		Message string `json:"message"`
+		Data    any    `json:"data,omitempty"`
+		Mode    string `json:"mode"`
 	}
 
 	Fail struct {
@@ -24,7 +24,7 @@ type (
 
 type Controller struct{}
 
-func (c *Controller) SuccessResponse(ctx *gin.Context, message string, data map[string]any) {
+func (c *Controller) SuccessResponse(ctx *gin.Context, message string, data any) {
 	response := Success{
 		Message: message,
 		Data:    data,
