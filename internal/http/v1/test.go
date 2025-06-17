@@ -2,7 +2,7 @@ package v1
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/txzy2/simple-api/internal/handlers"
+	handlers "github.com/txzy2/simple-api/internal/http"
 )
 
 type TestController struct {
@@ -16,11 +16,7 @@ func NewTestController() *TestController {
 }
 
 func (c *TestController) Hello(ctx *gin.Context) {
-	data := map[string]any{
-		"user": "John",
-		"age":  30,
-	}
-	c.SuccessResponse(ctx, "Hello World", data)
+	c.SuccessResponse(ctx, "Hello World", nil)
 }
 
 func (c *TestController) TestError(ctx *gin.Context) {

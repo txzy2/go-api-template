@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/txzy2/simple-api/internal/handlers/status"
+	"github.com/txzy2/simple-api/internal/http/status"
 	"github.com/txzy2/simple-api/internal/logger"
 	"github.com/txzy2/simple-api/pkg/common"
 )
@@ -35,11 +35,11 @@ func (c *Controller) SuccessResponse(ctx *gin.Context, message string, data map[
 	logger.AppLogger.Info("Success Data", response)
 }
 
-func (c *Controller) ErrorResponse(ctx *gin.Context, code int, error string) {
+func (c *Controller) ErrorResponse(ctx *gin.Context, code int, errMessage string) {
 	errorMessage := status.GetErrorMessage(code)
 
-	if error != "" {
-		errorMessage = error
+	if errMessage != "" {
+		errorMessage = errMessage
 	}
 
 	response := Fail{
