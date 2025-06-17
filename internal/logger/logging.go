@@ -20,16 +20,16 @@ func (l *Logger) Debug(msg string) {
 	l.debug.Println(msg)
 }
 
-func (l *Logger) Info(msg string) {
-	l.info.Println(msg)
+func (l *Logger) Info(msg string, data any) {
+	l.info.Println(msg, data)
 }
 
 func (l *Logger) Warn(msg string) {
 	l.warn.Println(msg)
 }
 
-func (l *Logger) Error(msg string) {
-	l.error.Println(msg)
+func (l *Logger) Error(msg string, data any) {
+	l.error.Println(msg, data)
 }
 
 var AppLogger Logger

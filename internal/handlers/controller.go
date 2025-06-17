@@ -1,40 +1,52 @@
 package handlers
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
-	"github.com/txzy2/simple-api/internal/status"
+	"github.com/txzy2/simple-api/internal/handlers/status"
+	"github.com/txzy2/simple-api/internal/logger"
+	"github.com/txzy2/simple-api/pkg/common"
 )
 
-type Response struct {
-	Success bool   `json:"success"`
-	Message string `json:"message"`
-	Data    any    `json:"data,omitempty"`
-}
+type (
+	Success struct {
+		Message string         `json:"message"`
+		Data    map[string]any `json:"data,omitempty"`
+		Mode    string         `json:"mode"`
+	}
+
+	Fail struct {
+		Error string `json:"error"`
+		Mode  string `json:"mode,omitempty"`
+	}
+)
 
 type Controller struct{}
 
-func (c *Controller) SuccessResponse(ctx *gin.Context, message string, data ...any) {
-	response := Response{
-		Success: true,
+func (c *Controller) SuccessResponse(ctx *gin.Context, message string, data map[string]any) {
+	response := Success{
 		Message: message,
+		Data:    data,
+		Mode:    common.Mode,
 	}
 
-	if len(data) > 0 {
-		response.Data = data[0]
-	}
-
-	ctx.JSON(200, response)
+	ctx.JSON(http.StatusOK, response)
+	logger.AppLogger.Info("Success Data", response)
 }
 
-func (c *Controller) ErrorResponse(ctx *gin.Context, code int, message ...string) {
+func (c *Controller) ErrorResponse(ctx *gin.Context, code int, error string) {
 	errorMessage := status.GetErrorMessage(code)
 
-	if len(message) > 0 && message[0] != "" {
-		errorMessage = message[0]
+	if error != "" {
+		errorMessage = error
 	}
 
-	ctx.JSON(code, Response{
-		Success: false,
-		Message: errorMessage,
-	})
+	response := Fail{
+		Error: errorMessage,
+		Mode:  common.Mode,
+	}
+
+	ctx.JSON(code, response)
+	logger.AppLogger.Error("ERROR Data", response)
 }

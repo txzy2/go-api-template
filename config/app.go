@@ -6,6 +6,7 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/txzy2/simple-api/internal/logger"
+	"github.com/txzy2/simple-api/pkg/common"
 )
 
 type Config struct {
@@ -36,6 +37,8 @@ func loadConfig() {
 		Port: getEnv("PORT", "8080"),
 		DB:   LoadDBConfig(),
 	}
+
+	common.SetMode(getEnv("GIN_MODE", "dev"))
 }
 
 func init() {
