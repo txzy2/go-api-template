@@ -2,7 +2,7 @@ package v1
 
 import (
 	"github.com/gin-gonic/gin"
-	handlers "github.com/txzy2/simple-api/internal/http"
+	handlers "github.com/txzy2/simple-api/internal/controllers"
 )
 
 type TestController struct {

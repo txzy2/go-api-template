@@ -4,9 +4,27 @@ import (
 	"fmt"
 )
 
-type UserService struct {
-	// Здесь могут быть поля для зависимостей, например, подключение к БД
-}
+type (
+	IUserService interface {
+		GetUserByID(UserInput) (UserOutput, error)
+		// CreateUser(UserInput) (UserOutput, error)
+	}
+
+	UserOutput struct {
+		Id    string `json:"id"`
+		Name  string `json:"name"`
+		Age   int    `json:"age"`
+		Email string `json:"email"`
+	}
+
+	UserInput struct {
+		Id string `json:"id"`
+	}
+
+	UserService struct {
+		// Здесь могут быть поля для зависимостей, например, подключение к БД
+	}
+)
 
 func NewUserService() *UserService {
 	return &UserService{}

@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	v1 "github.com/txzy2/simple-api/internal/http/v1"
+	v1 "github.com/txzy2/simple-api/internal/controllers/v1"
 	"github.com/txzy2/simple-api/internal/services/user"
 )
 

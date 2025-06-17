@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	baseController "github.com/txzy2/simple-api/internal/http"
+	baseController "github.com/txzy2/simple-api/internal/controllers"
 	"github.com/txzy2/simple-api/internal/services/user"
 )
 
