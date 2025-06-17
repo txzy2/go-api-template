@@ -5,26 +5,26 @@ import (
 
 	"github.com/gin-gonic/gin"
 	baseController "github.com/txzy2/simple-api/internal/controllers"
-	"github.com/txzy2/simple-api/internal/services/user"
+	"github.com/txzy2/simple-api/internal/services"
 )
 
 type UserController struct {
 	*baseController.Controller
-	UserService user.IUserService
+	services *services.Provider
 }
 
-func NewUserController(userService user.IUserService) *UserController {
+func NewUserController(services *services.Provider) *UserController {
 	return &UserController{
-		Controller:  &baseController.Controller{},
-		UserService: userService,
+		Controller: &baseController.Controller{},
+		services:   services,
 	}
 }
 
 func (u *UserController) GetUserById(ctx *gin.Context) {
 	idParam := ctx.Param("id")
 
-	input := user.UserInput{Id: idParam}
-	userOutput, err := u.UserService.GetUserByID(input)
+	input := services.UserInput{Id: idParam}
+	userOutput, err := u.services.UserService.GetUserByID(input)
 
 	if err != nil {
 		u.ErrorResponse(ctx, http.StatusNotFound, err.Error())

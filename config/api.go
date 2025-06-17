@@ -6,14 +6,16 @@ import (
 	"github.com/gin-gonic/gin"
 
 	v1 "github.com/txzy2/simple-api/internal/controllers/v1"
-	"github.com/txzy2/simple-api/internal/services/user"
+	"github.com/txzy2/simple-api/internal/services"
 )
 
 func SetupRoutes(router *gin.Engine) {
-	userService := user.NewUserService()
+	// Создаем единый провайдер сервисов
+	servicesProvider := services.NewProvider()
 
+	// Создаем контроллеры, передавая им провайдер
 	testController := v1.NewTestController()
-	userController := v1.NewUserController(userService)
+	userController := v1.NewUserController(servicesProvider)
 
 	api := router.Group("/api")
 	{
