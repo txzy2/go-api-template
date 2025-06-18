@@ -1,2 +1,5 @@
 .env
 logs/
+tmp/
+go.sum
+main

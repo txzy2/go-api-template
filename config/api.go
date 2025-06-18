@@ -7,11 +7,15 @@ import (
 
 	v1 "github.com/txzy2/simple-api/internal/controllers/v1"
 	"github.com/txzy2/simple-api/internal/services"
+	db "github.com/txzy2/simple-api/pkg/database"
 )
 
 func SetupRoutes(router *gin.Engine) {
-	// Создаем единый провайдер сервисов
-	servicesProvider := services.NewProvider()
+	db, err := db.OpenConnection()
+	if err != nil {
+		panic(err)
+	}
+	servicesProvider := services.NewProvider(db)
 
 	// Создаем контроллеры, передавая им провайдер
 	testController := v1.NewTestController()

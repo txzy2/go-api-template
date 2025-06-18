@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: go_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - PORT=8080
+      - GIN_MODE=debug
+    depends_on:
+      - db
+    volumes:
+      - ./:/app
+      - ./.env:/app/.env
+      - ./logs:/app/logs
+    networks:
+      - goapi-network
+
+  db:
+    image: postgres:15-alpine
+    container_name: go_db
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+      # - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    networks:
+      - goapi-network
+
+volumes:
+  postgres_data:
+
+
+networks:
+  goapi-network:
+    driver: bridge

@@ -6,15 +6,11 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/txzy2/simple-api/pkg/common"
-	"github.com/txzy2/simple-api/pkg/logger"
 )
 
 type Config struct {
 	// Порт api
 	Port string
-
-	// Конфиг для БД
-	DB DBConfig
 }
 
 var AppConfig Config
@@ -30,12 +26,11 @@ func getEnv(key, defaultValue string) string {
 func loadConfig() {
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Println("Warning: .env file not found, using environment variables")
 	}
 
 	AppConfig = Config{
 		Port: getEnv("PORT", "8080"),
-		DB:   LoadDBConfig(),
 	}
 
 	common.SetMode(getEnv("GIN_MODE", "dev"))
@@ -43,5 +38,4 @@ func loadConfig() {
 
 func init() {
 	loadConfig()
-	logger.Init()
 }

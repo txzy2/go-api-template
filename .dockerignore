@@ -1,0 +1,30 @@
+# Игнорируем volume директории
+postgres_data/
+logs/
+
+# Игнорируем временные файлы
+*.tmp
+*.log
+
+# Игнорируем git
+.git/
+.gitignore
+
+# Игнорируем docker файлы
+docker-compose.yml
+docker-compose.*.yml
+Dockerfile*
+
+# Игнорируем переменные окружения
+.env
+.env.*
+
+# Игнорируем IDE файлы
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Игнорируем OS файлы
+.DS_Store
+Thumbs.db

@@ -6,7 +6,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/txzy2/simple-api/internal/controllers/status"
 	"github.com/txzy2/simple-api/pkg/common"
-	"github.com/txzy2/simple-api/pkg/logger"
 )
 
 type (
@@ -32,7 +31,6 @@ func (c *Controller) SuccessResponse(ctx *gin.Context, message string, data any)
 	}
 
 	ctx.JSON(http.StatusOK, response)
-	logger.AppLogger.Info("Success Data", response)
 }
 
 func (c *Controller) ErrorResponse(ctx *gin.Context, code int, errMessage string) {
@@ -48,5 +46,4 @@ func (c *Controller) ErrorResponse(ctx *gin.Context, code int, errMessage string
 	}
 
 	ctx.JSON(code, response)
-	logger.AppLogger.Error("ERROR Data", response)
 }

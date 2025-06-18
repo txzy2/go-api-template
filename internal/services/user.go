@@ -1,6 +1,7 @@
 package services
 
 import (
+	"database/sql"
 	"fmt"
 )
 
@@ -11,10 +12,12 @@ type (
 	}
 
 	UserOutput struct {
-		Id    string `json:"id"`
-		Name  string `json:"name"`
-		Age   int    `json:"age"`
-		Email string `json:"email"`
+		Id        string `json:"id"`
+		Name      string `json:"name"`
+		Age       int    `json:"age"`
+		Email     string `json:"email"`
+		CreatedAt string `json:"created_at"`
+		UpdatedAt string `json:"updated_at"`
 	}
 
 	UserInput struct {
@@ -22,24 +25,31 @@ type (
 	}
 
 	UserService struct {
-		// Здесь могут быть поля для зависимостей, например, подключение к БД
+		db *sql.DB
 	}
 )
 
-func NewUserService() *UserService {
-	return &UserService{}
+func NewUserService(db *sql.DB) *UserService {
+	return &UserService{db: db}
 }
 
-func (s *UserService) GetUserByID(input UserInput) (UserOutput, error) {
-	if input.Id == "2" {
-		return UserOutput{
-			Id:    input.Id,
-			Name:  "Anton",
-			Age:   24,
-			Email: "kamaeff2@gmail.com",
-		}, nil
+// GetUserByID возвращает пользователя по ID или ошибку, если пользователь не найден.
+func (dbs *UserService) GetUserByID(input UserInput) (UserOutput, error) {
+	var user UserOutput
+	const query = "SELECT id, name, age, email, created_at, updated_at FROM users WHERE id = $1"
+
+	err := dbs.db.QueryRow(query, input.Id).
+		Scan(&user.Id, &user.Name, &user.Age, &user.Email, &user.CreatedAt, &user.UpdatedAt)
+
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return UserOutput{}, sql.ErrNoRows
+		}
+
+		return UserOutput{}, err
 	}
-	return UserOutput{}, fmt.Errorf("пользователь с ID %s не найден", input.Id)
+
+	return user, nil
 }
 
 func (s *UserService) CreateUser(name string) (int, error) {

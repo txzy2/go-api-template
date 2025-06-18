@@ -1,5 +1,7 @@
 package services
 
+import "database/sql"
+
 // Provider содержит все сервисы приложения
 type Provider struct {
 	UserService IUserService
@@ -10,9 +12,9 @@ type Provider struct {
 }
 
 // NewProvider создает новый экземпляр провайдера со всеми сервисами
-func NewProvider() *Provider {
+func NewProvider(db *sql.DB) *Provider {
 	return &Provider{
-		UserService: NewUserService(),
+		UserService: NewUserService(db),
 		// Инициализация других сервисов
 		// AuthService: NewAuthService(),
 		// OrderService: NewOrderService(),
