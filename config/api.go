@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	v1 "github.com/txzy2/simple-api/internal/controllers/v1"
+	"github.com/txzy2/simple-api/internal/middleware"
 	"github.com/txzy2/simple-api/internal/services"
 	db "github.com/txzy2/simple-api/pkg/database"
 )
@@ -20,6 +21,7 @@ func SetupRoutes(router *gin.Engine) {
 	// Создаем контроллеры, передавая им провайдер
 	testController := v1.NewTestController()
 	userController := v1.NewUserController(servicesProvider)
+	incidentController := v1.NewIncidentController(servicesProvider)
 
 	api := router.Group("/api/v1")
 	{
@@ -30,6 +32,12 @@ func SetupRoutes(router *gin.Engine) {
 		{
 			userGroup.GET("/:id", userController.GetUserById)
 			userGroup.POST("/create", userController.CreateNewUser)
+		}
+
+		incidentGroup := api.Group("/incident")
+		incidentGroup.Use(middleware.TokenCheck()) // <-- подключаем middleware
+		{
+			incidentGroup.POST("/new", incidentController.New)
 		}
 	}
 
