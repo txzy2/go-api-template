@@ -21,7 +21,7 @@ func SetupRoutes(router *gin.Engine) {
 	testController := v1.NewTestController()
 	userController := v1.NewUserController(servicesProvider)
 
-	api := router.Group("/api")
+	api := router.Group("/api/v1")
 	{
 		api.GET("/", testController.Hello)
 		api.POST("/test", testController.TestError)
@@ -29,6 +29,7 @@ func SetupRoutes(router *gin.Engine) {
 		userGroup := api.Group("/user")
 		{
 			userGroup.GET("/:id", userController.GetUserById)
+			userGroup.POST("/create", userController.CreateNewUser)
 		}
 	}
 

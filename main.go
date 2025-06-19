@@ -6,6 +6,9 @@ import (
 	"github.com/txzy2/simple-api/config"
 )
 
+//TODO:
+// 1) Попробовать доабвить zap
+
 func main() {
 	gin.SetMode(gin.ReleaseMode)
 

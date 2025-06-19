@@ -11,6 +11,8 @@ RUN go mod download
 
 COPY . .
 
+RUN mkdir -p /app/tmp
+
 EXPOSE 8080
 
 CMD ["air", "-c", "/app/air.toml"]

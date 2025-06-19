@@ -1,6 +1,6 @@
 package services
 
-import "database/sql"
+import "gorm.io/gorm"
 
 // Provider содержит все сервисы приложения
 type Provider struct {
@@ -9,14 +9,16 @@ type Provider struct {
 	// например:
 	// AuthService IAuthService
 	// OrderService IOrderService
+	DB *gorm.DB
 }
 
 // NewProvider создает новый экземпляр провайдера со всеми сервисами
-func NewProvider(db *sql.DB) *Provider {
+func NewProvider(db *gorm.DB) *Provider {
 	return &Provider{
 		UserService: NewUserService(db),
 		// Инициализация других сервисов
 		// AuthService: NewAuthService(),
 		// OrderService: NewOrderService(),
+		DB: db,
 	}
 }
