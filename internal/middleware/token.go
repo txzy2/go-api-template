@@ -78,7 +78,7 @@ func TokenCheck() gin.HandlerFunc {
 		if key == "" {
 			c.JSON(http.StatusInternalServerError, gin.H{
 				"error":   "server misconfiguration",
-				"details": "TOKEN_SALT environment variable is not set",
+				"details": "internal service error",
 			})
 			c.Abort()
 			return
@@ -108,7 +108,7 @@ func TokenCheck() gin.HandlerFunc {
 		if expectedSignature != headers.XSignature {
 			c.JSON(http.StatusUnauthorized, gin.H{
 				"error":   "invalid signature",
-				"details": "HMAC verification failed",
+				"details": "verification failed",
 			})
 			c.Abort()
 			return
